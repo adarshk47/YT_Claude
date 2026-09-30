@@ -370,7 +370,7 @@ def neck_part(spec, mat=0, col=None, off=0.0, top=None, bottom=None):
         t = i / N
         zz = z0 + (z1 - z0) * t
         y = 0.012 * s + (0.016 * k - 0.012 * s) * t
-        r = (0.060 * s * (1 - t) + 0.054 * k * t) * (1.08 if t < 0.2 else 1.0) * spec.girth ** 0.5 + off
+        r = (0.058 * s * (1 - t) + 0.049 * k * t) * (1.08 if t < 0.2 else 1.0) * spec.girth ** 0.5 + off
         if t < 0.25:
             w = mix_weights({'chest': 1.0}, {'neck': 1.0}, t / 0.25)
         elif t < 0.75:

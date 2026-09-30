@@ -17,11 +17,11 @@ from ..meshkit import Part, sec, loft, dome_cap, smoothstep, uv_sphere, tube_pat
 HEAD_TABLE = [
     (0.000, .011, .007, .007, -.066, 2.0),
     (0.008, .024, .012, .015, -.062, 2.2),
-    (0.020, .037, .018, .032, -.053, 2.4),
-    (0.035, .053, .023, .054, -.042, 2.4),
-    (0.050, .062, .036, .064, -.030, 2.4),
-    (0.070, .068, .058, .068, -.016, 2.4),
-    (0.090, .072, .076, .071, -.004, 2.4),
+    (0.020, .040, .018, .032, -.053, 2.2),
+    (0.035, .057, .024, .054, -.042, 2.2),
+    (0.050, .067, .038, .064, -.030, 2.25),
+    (0.070, .073, .060, .068, -.016, 2.3),
+    (0.090, .076, .077, .071, -.004, 2.35),
     (0.110, .074, .088, .077, .004, 2.4),
     (0.130, .077, .094, .085, .008, 2.4),
     (0.150, .079, .096, .092, .010, 2.35),
@@ -330,7 +330,7 @@ class Head:
                         rot = Matrix.Rotation(ang, 3, 'X')
                         p = c + rot @ (d * rr)
                         wt = {'lid.' + sd: 1.0} if is_upper else {'head': 1.0}
-                        row.append(lid.vert(p, wt, (1, 1, 1, 1)))
+                        row.append(lid.vert(p, wt, (0.93, 0.88, 0.86, 1)))
                     rows.append(row)
                 for i in range(NT):
                     for j in range(NA):
@@ -424,7 +424,7 @@ class Head:
                 pts.append(p.copy())
                 radii.append(r * (1 - 0.8 * t))
                 # lie along the surface with a slight lift
-                dirv = (dirv - nrm * dirv.dot(nrm) + nrm * 0.12).normalized()
+                dirv = (dirv - nrm * dirv.dot(nrm) + nrm * 0.05).normalized()
                 p = p + dirv * (L / steps)
             part.extend(tube_path(pts, radii, n=sides, mat=mat, w=wt, flat=0.45, up=tuple(nrm), col=col))
         return part
@@ -444,8 +444,8 @@ class Head:
                 if loc is None:
                     continue
                 d = Vector((sg * 1.0, 0, 0.25 - 0.55 * t + (rng.random() - 0.5) * 0.3)).normalized()
-                L = (0.007 + 0.004 * rng.random()) * k
-                r = (0.0011 + 0.0005 * (1 - t)) * k
+                L = (0.006 + 0.003 * rng.random()) * k
+                r = (0.0013 + 0.0006 * (1 - t)) * k
                 roots.append((loc + nrm * 0.0008 * k, nrm, d, L, r, {'brow.' + sd: 0.75, 'head': 0.25}))
         return self.surface_strands(roots)
 
@@ -469,7 +469,7 @@ class Head:
         nr = vertex_normals(self.skin)
         cand = [(i, self.beard_mask(v, style)) for i, v in enumerate(self.skin.v)]
         cand = [(i, m) for i, m in cand if m > 0.12]
-        target = int((1500 if style != 'moustache' else 500) * density)
+        target = int((260 if style != 'moustache' else 160) * density)
         if cand:
             for n_ in range(target):
                 i, m = cand[rng.randrange(len(cand))]
@@ -487,7 +487,7 @@ class Head:
                     L = 0.0055 + 0.0025 * rng.random()
                 else:
                     d = Vector((0.25 * sgn * min(1, abs(u) / 0.02), -0.1, -1.0))
-                    L = 0.0042 + 0.002 * rng.random()
+                    L = 0.0036 + 0.0016 * rng.random()
                 p = v + (Vector((rng.random() - 0.5, rng.random() - 0.5, rng.random() - 0.5)) * 0.003 * k)
                 roots.append((p + nrm * 0.0004 * k, nrm, d, L * k * length, (0.001 + 0.0004 * rng.random()) * k,
                               self.weights(v)))
@@ -538,9 +538,9 @@ class Head:
             return Part()
         k = self.k
         nr = vertex_normals(self.skin)
-        thick = 0.0022 * k if style != 'full_long' else 0.004 * k
-        return shell(self.skin, lambda i, v: self.beard_mask(v, style) - 0.75,
-                     lambda i, v, m: thick * 0.5, weights=lambda i, v: self.weights(v),
+        thick = 0.0034 * k if style != 'full_long' else 0.005 * k
+        return shell(self.skin, lambda i, v: self.beard_mask(v, style) - 0.3,
+                     lambda i, v, m: thick * min(1.0, 0.25 + m), weights=lambda i, v: self.weights(v),
                      normals=nr)
 
     def glasses(self, gl):

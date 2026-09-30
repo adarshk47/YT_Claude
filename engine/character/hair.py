@@ -39,7 +39,7 @@ class HairBuilder:
         rec = st.get('temple_recess', 0.0)
         raise_ = st.get('hairline_raise', 0.0)
         sb = st.get('sideburn', 0.03)
-        pts = [(0, 0.064 + raise_), (22, 0.062 + raise_ + rec * 0.4), (38, 0.056 + rec + raise_ * 0.7),
+        pts = [(0, 0.070 + raise_), (22, 0.068 + raise_ + rec * 0.4), (38, 0.062 + rec + raise_ * 0.7),
                (55, 0.040 + rec * 0.5), (70, 0.018), (78, -sb), (88, -sb), (96, 0.030), (112, 0.030),
                (125, 0.0), (145, -0.05), (165, -0.072), (180, -0.076)]
         return _interp(pts, a)
@@ -109,7 +109,7 @@ class HairBuilder:
         keep = []
         vol = self.st.get('volume', 0.01)
         for i, v in enumerate(skin.v):
-            ok, az, w = self.in_scalp(v, -0.004)
+            ok, az, w = self.in_scalp(v, 0.004)
             keep.append(ok)
         remap = {}
         for fi, f in enumerate(skin.f):

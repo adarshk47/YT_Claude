@@ -22,7 +22,7 @@ class BodySpec:
         z = {}
         z['crown'] = height
         z['chin'] = B
-        z['eye'] = B + 0.49 * self.head_h
+        z['eye'] = B + 0.465 * self.head_h
         z['head_c'] = B + 0.52 * self.head_h
         z['neck_top'] = B + 0.12 * self.head_h
         z['neck_base'] = B * 0.952

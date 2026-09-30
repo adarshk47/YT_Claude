@@ -1,20 +1,54 @@
 {
   "name": "Adarsh",
   "notes": "Stylised, editable approximation built from the reference turnaround image in the v0.1 trial ZIP. It is NOT a face scan. Adjust the numbers below (1.0 = neutral) and rebuild with Build_Assets.bat to refine the likeness. Put new reference photos in reference_photos/ for your own comparison.",
-  "skin": "#93603f",
+  "skin": "#9a6242",
   "hair": "#1a1310",
   "eyes": "#2c1a10",
-  "body": {"height": 1.78, "head_ratio": 0.141, "shoulder": 0.168, "hip": 0.092, "girth": 0.97},
-  "face": {
-    "head_width": 1.0, "head_depth": 1.0, "face_depth": 1.0,
-    "jaw_width": 0.98, "chin_width": 1.02, "cheek_full": 0.45, "cheekbone": 1.0,
-    "nose_length": 1.05, "nose_width": 1.0, "nose_projection": 1.12,
-    "eye_spacing": 1.0, "eye_size": 1.02, "eye_open": 1.0, "lid_upper": 16.0, "lid_lower": 26.0,
-    "brow_ridge": 1.0, "brow_thickness": 1.0,
-    "lip_full": 0.95, "mouth_width": 1.0, "mouth_height": 1.06, "smile": 0.45,
-    "chin_projection": 1.05, "ear_size": 1.0, "stubble": 0.65
+  "body": {
+    "height": 1.78,
+    "head_ratio": 0.148,
+    "shoulder": 0.165,
+    "hip": 0.092,
+    "girth": 0.97
   },
-  "glasses": {"enabled": true, "frame": "#8c8f96", "lens_half_width": 0.0235, "lens_half_height": 0.0172, "superellipse": 3.4, "rim_radius": 0.0010},
-  "facial_hair": {"style": "moustache_goatee", "density": 1.0, "length": 1.0},
+  "face": {
+    "head_width": 1.0,
+    "head_depth": 1.0,
+    "face_depth": 1.0,
+    "jaw_width": 1.0,
+    "chin_width": 1.08,
+    "cheek_full": 0.9,
+    "cheekbone": 1.0,
+    "nose_length": 0.98,
+    "nose_width": 1.05,
+    "nose_projection": 1.0,
+    "eye_spacing": 1.04,
+    "eye_size": 1.18,
+    "eye_open": 1.0,
+    "lid_upper": 22.0,
+    "lid_lower": 42.0,
+    "brow_ridge": 1.0,
+    "brow_thickness": 1.1,
+    "lip_full": 1.05,
+    "mouth_width": 1.0,
+    "mouth_height": 0.96,
+    "smile": 0.5,
+    "chin_projection": 1.05,
+    "ear_size": 1.0,
+    "stubble": 0.55
+  },
+  "glasses": {
+    "enabled": true,
+    "frame": "#8c8f96",
+    "lens_half_width": 0.0235,
+    "lens_half_height": 0.0172,
+    "superellipse": 3.4,
+    "rim_radius": 0.001
+  },
+  "facial_hair": {
+    "style": "moustache_goatee",
+    "density": 1.0,
+    "length": 1.0
+  },
   "default_hair": "adarsh_wavy"
 }
