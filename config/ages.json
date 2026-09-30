@@ -1,0 +1,11 @@
+{
+  "_comment": "Age / presentation presets applied on top of any role. Values modify the base identity.",
+  "young":  {"label_en": "Young adult", "label_hi": "युवा", "approx_age": "25-30"},
+  "mature": {"label_en": "Mature adult", "label_hi": "मध्य आयु", "approx_age": "40-45",
+             "girth_add": 0.05, "belly": 0.25, "grey": 0.14, "hair_volume_mul": 0.85,
+             "face": {"cheek_full": 0.65, "jaw_width": 1.0, "smile": 0.4}, "facial_hair_density_mul": 1.1},
+  "older":  {"label_en": "Older adult", "label_hi": "बुज़ुर्ग", "approx_age": "60-65",
+             "girth_add": 0.08, "belly": 0.4, "posture": 0.5, "grey": 0.8, "hair_volume_mul": 0.55,
+             "hair_density_mul": 0.75, "hairline_raise": 0.012, "temple_recess": 0.025,
+             "face": {"cheek_full": 0.8, "lid_upper": 21.0, "smile": 0.3, "stubble": 0.45}, "beard_grey": true}
+}

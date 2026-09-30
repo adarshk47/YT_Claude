@@ -1,0 +1,217 @@
+{
+  "_comment": "Role variants of Adarsh. Every role shares the same face/identity (assets/likeness/adarsh_identity.json). Edit outfits, hair and gestures here; add a new role by copying a block. Garment types: see engine/character/clothes.py (GARMENTS).",
+  "default": {
+    "name_en": "Everyday Adarsh", "name_hi": "सामान्य दृष्टिकोण",
+    "description": "Adarsh as in the reference: open black bomber jacket, cream quarter-zip polo, blue jeans, blue sneakers.",
+    "hair": "adarsh_wavy", "facial_hair": "moustache_goatee",
+    "outfit": [
+      {"type": "polo", "color": "#e7d8bd", "tucked": true},
+      {"type": "trousers", "fit": "jeans", "color": "#2d4f85"},
+      {"type": "belt", "color": "#2a1f18"},
+      {"type": "jacket", "color": "#1c1a1e"},
+      {"type": "sneakers", "color": "#2250b8", "sole_color": "#f1f1ee"}
+    ],
+    "default_scene": "home_street", "gesture_style": "direct_address",
+    "keywords": ["adarsh", "everyday", "common man", "aam aadmi", "normal", "person", "आम आदमी", "सामान्य", "व्यक्ति"]
+  },
+  "news": {
+    "name_en": "Everyday person (news opinion)", "name_hi": "समाचार पर आम व्यक्ति की राय",
+    "description": "Ordinary checked shirt and jeans; talking about the news at a tea stall or street.",
+    "hair": "ordinary_short", "facial_hair": "moustache_goatee",
+    "outfit": [
+      {"type": "shirt", "color": "#8fa9c4", "pattern": "check", "pattern_color": "#3c5877", "sleeve": "rolled", "tucked": false, "pocket": true},
+      {"type": "trousers", "fit": "jeans", "color": "#2f4a72"},
+      {"type": "sneakers", "color": "#3b3b40", "sole_color": "#e8e8e4"},
+      {"type": "watch", "side": "L"}
+    ],
+    "default_scene": "home_street", "gesture_style": "conversational",
+    "keywords": ["news", "opinion", "public", "street", "tea stall", "chai", "khabar", "समाचार", "खबर", "राय"]
+  },
+  "genz": {
+    "name_en": "Gen Z", "name_hi": "Gen Z",
+    "description": "Open overshirt over a tee, relaxed jeans and white sneakers; textured casual hair.",
+    "hair": "genz_textured", "facial_hair": "moustache_goatee",
+    "outfit": [
+      {"type": "tshirt", "color": "#f3f1ec"},
+      {"type": "shirt", "key": "overshirt", "color": "#556b5d", "open": true, "open_deg": 10, "tucked": false, "off": 0.016, "sleeve": "rolled", "collar": "shirt", "buttons": false},
+      {"type": "trousers", "fit": "jeans", "color": "#4d6a93"},
+      {"type": "sneakers", "color": "#f4f4f2", "sole_color": "#f4f4f2"}
+    ],
+    "default_scene": "home_street", "gesture_style": "lively",
+    "keywords": ["gen z", "genz", "young", "college", "student", "youth", "युवा"]
+  },
+  "millennial": {
+    "name_en": "Millennial / mature", "name_hi": "Millennial / मध्य आयु",
+    "description": "Smart-casual tucked shirt, chinos and brown shoes; neat side part.",
+    "hair": "side_part_neat", "facial_hair": "moustache_goatee",
+    "outfit": [
+      {"type": "shirt", "color": "#c9d6cf", "sleeve": "long", "tucked": true},
+      {"type": "trousers", "color": "#8a7a5e"},
+      {"type": "belt", "color": "#4a2f1d"},
+      {"type": "shoes", "color": "#5a3a22"},
+      {"type": "watch", "side": "L"}
+    ],
+    "default_scene": "office", "gesture_style": "measured",
+    "keywords": ["millennial", "office worker", "professional", "मध्य आयु"]
+  },
+  "teacher": {
+    "name_en": "Teacher", "name_hi": "शिक्षक",
+    "description": "Pale blue shirt, dark trousers, belt, formal shoes and an ID lanyard; medium-short combed hair.",
+    "hair": "medium_combed", "facial_hair": "moustache_goatee",
+    "outfit": [
+      {"type": "shirt", "color": "#a9c7e8", "sleeve": "long", "tucked": true, "pocket": true},
+      {"type": "trousers", "color": "#262a33"},
+      {"type": "belt", "color": "#221a15"},
+      {"type": "shoes", "color": "#1a1512"},
+      {"type": "watch", "side": "L"},
+      {"type": "lanyard", "color": "#1f5aa8"}
+    ],
+    "default_scene": "classroom", "gesture_style": "explain",
+    "keywords": ["teacher", "sir", "master", "professor", "shikshak", "guru", "class", "शिक्षक", "अध्यापक", "गुरु", "मास्टर"]
+  },
+  "doctor": {
+    "name_en": "Doctor", "name_hi": "डॉक्टर",
+    "description": "White coat over a teal shirt, stethoscope, dark trousers; short practical hair.",
+    "hair": "short_practical", "facial_hair": "moustache_goatee",
+    "outfit": [
+      {"type": "shirt", "color": "#2f8a8c", "sleeve": "long", "tucked": true},
+      {"type": "trousers", "color": "#2a2f3a"},
+      {"type": "shoes", "color": "#1a1512"},
+      {"type": "coat", "color": "#f4f5f2"},
+      {"type": "stethoscope"}
+    ],
+    "default_scene": "clinic", "gesture_style": "calm",
+    "keywords": ["doctor", "physician", "clinic", "hospital", "daktar", "vaidya", "डॉक्टर", "चिकित्सक", "वैद्य"]
+  },
+  "engineer": {
+    "name_en": "Engineer", "name_hi": "इंजीनियर",
+    "description": "Rolled-sleeve shirt, generic hi-vis safety vest, jeans and work boots; tidy side part. Hard hat added at the worksite.",
+    "hair": "side_part_neat", "facial_hair": "moustache_goatee",
+    "outfit": [
+      {"type": "shirt", "color": "#d7dce2", "pattern": "check", "pattern_color": "#7a8796", "sleeve": "rolled", "tucked": true},
+      {"type": "trousers", "fit": "jeans", "color": "#34465e"},
+      {"type": "belt"},
+      {"type": "boots", "color": "#5b4028"},
+      {"type": "safety_vest", "color": "#d7ec2d"},
+      {"type": "watch", "side": "L"}
+    ],
+    "variants": {"hard_hat": [{"type": "hard_hat", "color": "#f2c318"}]},
+    "default_scene": "office", "gesture_style": "point_design",
+    "keywords": ["engineer", "site", "construction", "project", "developer", "इंजीनियर", "अभियंता"]
+  },
+  "businessman": {
+    "name_en": "Businessman", "name_hi": "व्यवसायी",
+    "description": "Charcoal suit, white shirt, maroon tie, black shoes; formal side part.",
+    "hair": "formal_side", "facial_hair": "moustache_goatee",
+    "outfit": [
+      {"type": "shirt", "color": "#f4f5f7", "sleeve": "long", "tucked": true},
+      {"type": "tie", "color": "#7a1f2b"},
+      {"type": "trousers", "color": "#2d3038"},
+      {"type": "belt", "color": "#111111"},
+      {"type": "shoes", "color": "#111010"},
+      {"type": "blazer", "color": "#2d3038"},
+      {"type": "watch", "side": "L", "face": "#d9c38a"}
+    ],
+    "default_scene": "office", "gesture_style": "confident",
+    "keywords": ["businessman", "business", "ceo", "boss", "company", "entrepreneur", "seth", "व्यवसायी", "कारोबारी", "बिज़नेस"]
+  },
+  "vyapari": {
+    "name_en": "Shopkeeper (vyapari)", "name_hi": "व्यापारी",
+    "description": "Light shirt with a sleeveless waistcoat and trousers; neat combed hair.",
+    "hair": "formal_side", "facial_hair": "moustache_goatee",
+    "outfit": [
+      {"type": "shirt", "color": "#efe3cf", "sleeve": "long", "tucked": false},
+      {"type": "vest", "style": "waistcoat", "color": "#5b4431"},
+      {"type": "trousers", "color": "#3a3632"},
+      {"type": "sandals", "color": "#4d2f1c"},
+      {"type": "wristband", "side": "R"}
+    ],
+    "default_scene": "shop", "gesture_style": "conversational",
+    "keywords": ["shopkeeper", "shop", "trader", "merchant", "dukandar", "vyapari", "baniya", "व्यापारी", "दुकानदार", "दुकान"]
+  },
+  "soldier": {
+    "name_en": "Soldier", "name_hi": "सैनिक",
+    "description": "Generic olive uniform (no real insignia or unit markings), belt, cargo trousers and boots; military short hair, trimmed moustache.",
+    "hair": "military_short", "facial_hair": "moustache",
+    "outfit": [
+      {"type": "shirt", "key": "uniform", "color": "#4d5a3c", "sleeve": "rolled", "tucked": true, "collar": "shirt"},
+      {"type": "chest_pockets", "key": "uniform", "color": "#4d5a3c"},
+      {"type": "epaulettes", "key": "uniform", "color": "#4d5a3c"},
+      {"type": "trousers", "key": "uniform_pants", "fit": "cargo", "color": "#4a5539"},
+      {"type": "belt", "color": "#3a3a2c", "buckle_color": "#8f8c7c"},
+      {"type": "boots", "color": "#1c1a17"}
+    ],
+    "default_scene": "border", "gesture_style": "alert",
+    "keywords": ["soldier", "army", "jawan", "fauji", "military", "border", "sainik", "सैनिक", "जवान", "फौजी", "सेना"]
+  },
+  "pandit": {
+    "name_en": "Pandit", "name_hi": "पंडित",
+    "description": "Cream kurta over a white dhoti with a saffron angavastram (gold border), red tilak, barefoot for the temple; short crop with a traditional choti.",
+    "hair": "crop_choti", "facial_hair": "moustache_goatee",
+    "outfit": [
+      {"type": "kurta", "color": "#f0e6cf", "length": "knee"},
+      {"type": "dhoti", "color": "#f6f2e6", "border": "#c9a13b"},
+      {"type": "shawl", "key": "angavastram", "color": "#e07a1f", "border": "#d8b048"},
+      {"type": "tilak", "style": "vertical", "color": "#c8261e"},
+      {"type": "wristband", "side": "R"}
+    ],
+    "default_scene": "temple", "gesture_style": "namaste_explain",
+    "keywords": ["pandit", "priest", "pujari", "purohit", "temple", "puja", "aarti", "पंडित", "पुजारी", "पुरोहित", "मंदिर"]
+  },
+  "sadhu": {
+    "name_en": "Sadhu", "name_hi": "साधु",
+    "description": "Simple saffron robe and shawl, rudraksha mala, tripundra tilak, barefoot; long hair tied in a bun and a long beard.",
+    "hair": "long_bun", "facial_hair": "full_long",
+    "outfit": [
+      {"type": "robe", "color": "#d8701d"},
+      {"type": "shawl", "key": "saffron_shawl", "color": "#c85f16", "style": "one_side", "width": 0.06},
+      {"type": "mala", "color": "#5a2e1a"},
+      {"type": "tilak", "style": "tripundra", "color": "#c8261e"}
+    ],
+    "default_scene": "ashram", "gesture_style": "calm_open_palm",
+    "keywords": ["sadhu", "saint", "baba", "yogi", "sanyasi", "monk", "sant", "साधु", "संत", "बाबा", "योगी"]
+  },
+  "leader": {
+    "name_en": "Political leader (fictional)", "name_hi": "काल्पनिक नेता",
+    "description": "Plain white kurta-pyjama with a dark Nehru vest and sandals; formal side part. Generic - no party symbols.",
+    "hair": "formal_side", "facial_hair": "moustache_goatee",
+    "outfit": [
+      {"type": "kurta", "color": "#f5f4ef", "length": "knee"},
+      {"type": "trousers", "key": "pyjama", "fit": "pyjama", "color": "#f2f1ec", "off": 0.011},
+      {"type": "vest", "style": "nehru", "color": "#2c2f36"},
+      {"type": "sandals", "color": "#3b2618"},
+      {"type": "watch", "side": "L", "face": "#d9c38a"}
+    ],
+    "default_scene": "political_stage", "gesture_style": "podium_speech",
+    "keywords": ["leader", "politician", "neta", "minister", "rally", "election", "नेता", "मंत्री", "राजनेता", "रैली"]
+  },
+  "critic": {
+    "name_en": "Film critic / reviewer", "name_hi": "फ़िल्म समीक्षक",
+    "description": "Dark blazer over a plain t-shirt, dark jeans, sneakers, lapel mic; styled casual quiff.",
+    "hair": "styled_quiff", "facial_hair": "moustache_goatee",
+    "outfit": [
+      {"type": "tshirt", "color": "#2c2c30", "tucked": true},
+      {"type": "trousers", "fit": "jeans", "color": "#23293a"},
+      {"type": "sneakers", "color": "#ecebe7", "sole_color": "#ecebe7"},
+      {"type": "blazer", "color": "#3a2f45", "open": true},
+      {"type": "lapel_mic"}
+    ],
+    "default_scene": "speaker_stage", "gesture_style": "analytical",
+    "keywords": ["critic", "reviewer", "review", "film", "movie", "analyst", "समीक्षक", "समीक्षा", "फ़िल्म"]
+  },
+  "speaker": {
+    "name_en": "Public speaker", "name_hi": "वक्ता",
+    "description": "Light shirt, navy blazer without tie, chinos, brown shoes and a lapel mic; styled quiff.",
+    "hair": "styled_quiff", "facial_hair": "moustache_goatee",
+    "outfit": [
+      {"type": "shirt", "color": "#e9eef3", "sleeve": "long", "tucked": true},
+      {"type": "trousers", "color": "#b3a488"},
+      {"type": "belt", "color": "#4a2f1d"},
+      {"type": "shoes", "color": "#5a3a22"},
+      {"type": "blazer", "color": "#1f2d4a"},
+      {"type": "lapel_mic"}
+    ],
+    "default_scene": "speaker_stage", "gesture_style": "podium_speech",
+    "keywords": ["speaker", "speech", "motivational", "orator", "public speaker", "talk", "वक्ता", "भाषण"]
+  }
+}
