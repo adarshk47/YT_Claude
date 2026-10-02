@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avatar Activity Demo</title>
+<style>
+  :root {
+    --bg: #eef1f5; --panel: #ffffffee; --ink: #1c2430; --muted: #5d6877;
+    --line: #d5dbe4; --accent: #2f6fd6; --accent-ink: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #151a22; --panel: #1f2631ee; --ink: #e8edf4; --muted: #9aa6b6;
+      --line: #313b4a; --accent: #5b94ee; --accent-ink: #0d1520;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink);
+    font: 15px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; overflow: hidden; }
+  #stage { position: fixed; inset: 0; }
+  canvas { display: block; width: 100%; height: 100%; }
+  .panel { position: fixed; left: 16px; right: 16px; bottom: 16px; max-width: 760px; margin: 0 auto;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px;
+    backdrop-filter: blur(8px); }
+  header { position: fixed; top: 14px; left: 16px; right: 16px; pointer-events: none; }
+  h1 { margin: 0; font-size: 17px; font-weight: 650; }
+  header p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+  .acts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .acts button { appearance: none; border: 1px solid var(--line); background: transparent; color: var(--ink);
+    padding: 7px 13px; border-radius: 999px; font: inherit; cursor: pointer; }
+  .acts button:hover { border-color: var(--accent); }
+  .acts button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 10px; color: var(--muted); font-size: 13px; }
+  .row label { display: inline-flex; gap: 8px; align-items: center; }
+  input[type=range] { width: 130px; accent-color: var(--accent); }
+  #err { position: fixed; top: 70px; left: 16px; right: 16px; color: #c0392b; display: none; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<header><h1>Avatar Activity Demo</h1><p>Drag to orbit, scroll to zoom. Keys 1–9, 0 switch activity.</p></header>
+<div id="err"></div>
+<div class="panel">
+  <div class="acts" id="acts"></div>
+  <div class="row">
+    <label>Speed <input id="speed" type="range" min="0.25" max="2" step="0.05" value="1"><span id="speedv">1.0×</span></label>
+    <label><input id="orbit" type="checkbox"> Auto-rotate</label>
+    <label><input id="pause" type="checkbox"> Pause</label>
+  </div>
+</div>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"
+} }
+</script>
+<script type="module" src="avatar.js"></script>
+</body>
+</html>
