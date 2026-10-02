@@ -1,6 +1,7 @@
 # Avatar activity demo
 
-Stylised 3D avatar playing general activities: idle, walk, run, wave, talk, sit, type, jump, dance, stretch.
+Semi-realistic 3D avatar styled after the Adarsh reference photos (black bomber, cream quarter-zip polo, slim jeans, blue sneakers, glasses, moustache + goatee, backpack straps).
+Activities: walk with coffee (default), walk, idle, run, wave, talk, sit, type, jump, dance, stretch. The **Cap** checkbox swaps the quiff for a blue cap.
 
 ## Run the web demo
 ```

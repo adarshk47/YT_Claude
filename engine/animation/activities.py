@@ -127,6 +127,30 @@ def walk(u):
     return p
 
 
+def walk_cup(u):
+    """Relaxed walk with a coffee cup held at chest height in the right hand."""
+    w = TAU * u
+    p = Pose()
+    for side, ph in (('L', 0.0), ('R', math.pi)):
+        s, c = math.sin(w + ph), math.cos(w + ph)
+        heel = 12 * max(0.0, s) * max(0.0, -c)        # toes up at heel strike
+        push = 26 * max(0.0, -s) * max(0.0, c)        # heel lifts at toe-off
+        fwd, knee = 22 * s, 7 + 44 * max(0.0, c) ** 1.5
+        p.leg(side, fwd, knee, foot=(fwd - knee) - heel + push)
+    p.rot['upper_arm.L'] = [18 * math.sin(w), 0, 5]
+    p.rot['forearm.L'] = [-(14 + 12 * max(0.0, -math.sin(w))), 0, 0]
+    p.rot['upper_arm.R'] = [-28 + 2.5 * math.cos(2 * w), 0, -4]
+    p.rot['forearm.R'] = [-98 + 3 * math.cos(2 * w), 0, 12]
+    p.rot['hand.R'] = [-12, 0, 0]
+    p.add('hips', y=-4.5 * math.sin(w), z=2.8 * math.cos(w))       # pelvis rotation and drop
+    p.add('chest', y=7 * math.sin(w), z=-2.0 * math.cos(w), x=2.5)  # shoulders counter-rotate
+    p.add('head', y=-3.5 * math.sin(w), z=1.2 * math.cos(w), x=-1)   # head stays steady
+    blink = 85 * bump(u, 0.62, 0.035)
+    p.add('lid.L', x=blink).add('lid.R', x=blink)
+    p.add('jaw', x=5 * bump(u, 0.3, 0.2))
+    return p
+
+
 def run(u):
     w = TAU * u
     p = Pose()
@@ -270,6 +294,7 @@ def stretch(u):
 # name -> (function, seconds per loop, travel m/s, props shown, label)
 CLIPS = {
     'idle': (idle, 4.0, 0.0, [], 'Idle'),
+    'walk_cup': (walk_cup, 1.2, 1.2, ['cup'], 'Walk + coffee'),
     'walk': (walk, 1.2, 1.2, [], 'Walk'),
     'run': (run, 0.72, 3.2, [], 'Run'),
     'wave': (wave, 2.0, 0.0, [], 'Wave'),
