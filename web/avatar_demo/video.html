@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adarsh Walk Viewer</title>
+<style>
+  :root { --bg:#0b0d11; --panel:#161a22; --ink:#eef1f6; --muted:#9aa3b2; --line:#2a303c; --accent:#6f8cff; --accent-ink:#0c1020; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 16px; display: grid; gap: 14px; }
+  h1 { margin: 4px 0 0; font-size: 20px; }
+  p.sub { margin: 0; color: var(--muted); font-size: 13.5px; }
+  /* frame crops the 1080x1080 video to the figure: x 15%-75%, y 12%-97% */
+  .frame { position: relative; width: 100%; aspect-ratio: 0.706; overflow: hidden; background: #000; border-radius: 10px; border: 1px solid var(--line); }
+  .frame video { position: absolute; width: 166.67%; left: -25%; top: -14.12%; height: auto; display: block; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 12px; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  button { appearance: none; border: 1px solid var(--line); background: transparent; color: var(--ink); padding: 7px 14px; border-radius: 999px; font: inherit; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  label { color: var(--muted); font-size: 13px; display: flex; gap: 8px; align-items: center; flex: 1 1 200px; }
+  input[type=range] { flex: 1; min-width: 0; accent-color: var(--accent); }
+  output { min-width: 3.2em; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
+  #err { display: none; color: #ff8a80; font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <div>
+    <h1>Adarsh walk viewer</h1>
+    <p class="sub">Rendered video of the Tripo model, not a live 3D model. Drag the slider to turn him.</p>
+  </div>
+  <div class="frame"><video id="v" muted loop playsinline preload="auto" aria-label="Character walking while the camera turns around him"><source src="media/walk_turntable.webm" type="video/webm"><source src="media/walk_turntable.mp4" type="video/mp4"></video></div>
+  <div id="err">The video could not be played in this browser.</div>
+  <div class="panel">
+    <div class="row">
+      <button id="play" aria-pressed="true">Pause</button>
+      <button data-t="0">Front</button><button data-t="1">Side</button><button data-t="2">Back</button><button data-t="3">Front 3/4</button>
+    </div>
+    <label>Turn <input id="seek" type="range" min="0" max="4" step="0.01" value="0" aria-label="Position in the turn"><output id="tv">0.0 s</output></label>
+    <label>Speed <input id="spd" type="range" min="0.25" max="2" step="0.05" value="1"><output id="sv">1.0×</output></label>
+  </div>
+</main>
+<script src="video.js"></script>
+</body>
+</html>

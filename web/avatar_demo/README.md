@@ -18,3 +18,6 @@ three.js loads from jsDelivr, so the page needs internet access. Pick an activit
 
 ## Next steps
 Load the Adarsh GLB in the web viewer, more activities, blend/transition graph, speech lip-sync.
+
+## Walk viewer (Tripo video)
+`video.html` plays `media/walk_turntable.mp4` (a Tripo Studio render of the reference character walking while the camera turns). Open `http://localhost:8000/video.html`. It is a video, not a 3D model: only the walk exists. Controls: pause, speed, Front/Side/Back buttons and a turn slider. The page crops the frame to the figure; a watermark-free export from Tripo is the clean option. For more activities (wave, sit, run), export a rigged `.glb` from Tripo Studio and load it with GLTFLoader.
