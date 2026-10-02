@@ -15,16 +15,22 @@ renderer.toneMappingExposure = dark ? 0.8 : 1.0;
 stage.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-const SKY = dark ? 0x232a38 : 0xcdd6e2;
-scene.background = new THREE.Color(SKY);
-scene.fog = new THREE.Fog(SKY, 8, 22);
+const SKY = dark ? 0x2a3042 : 0xa9b4c8;
+{
+  const c = document.createElement('canvas'); c.width = 4; c.height = 256;
+  const g = c.getContext('2d'), gr = g.createLinearGradient(0, 0, 0, 256);
+  gr.addColorStop(0, dark ? '#2b3550' : '#6f84ad'); gr.addColorStop(0.55, dark ? '#3c4561' : '#a8b6d0'); gr.addColorStop(1, dark ? '#4d5470' : '#d9d6dc');
+  g.fillStyle = gr; g.fillRect(0, 0, 4, 256);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; scene.background = t;
+}
+scene.fog = new THREE.Fog(SKY, 10, 26);
 scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
 scene.environmentIntensity = dark ? 0.35 : 0.55;
 
 const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 80);
-camera.position.set(1.5, 1.3, 4.3);
+camera.position.set(0.5, 1.05, 3.9);
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.target.set(0, 0.88, 0);
+controls.target.set(0, 0.95, 0);
 controls.enableDamping = true;
 controls.maxPolarAngle = Math.PI * 0.49;
 controls.minDistance = 1.5;
@@ -48,25 +54,53 @@ const BLOCK = 6;
 const street = new THREE.Group();
 scene.add(street);
 const smat = (c, r = 0.9) => new THREE.MeshStandardMaterial({ color: c, roughness: r });
+function banner(lines, bg, fg) {
+  const c = document.createElement('canvas'); c.width = 128; c.height = 256;
+  const g = c.getContext('2d'); g.fillStyle = bg; g.fillRect(0, 0, 128, 256);
+  g.fillStyle = fg; g.font = 'bold 34px system-ui, sans-serif'; g.textAlign = 'center';
+  g.translate(64, 128); g.rotate(-Math.PI / 2);
+  g.fillText(lines[0], 0, -2); g.font = 'bold 26px system-ui, sans-serif'; g.fillText(lines[1], 0, 30);
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(0.35, 0.8), new THREE.MeshStandardMaterial({ map: t, roughness: 0.8, side: THREE.DoubleSide }));
+  m.rotation.y = Math.PI / 2; m.castShadow = true; return m;
+}
+function bystander(parent, x, z, hoodie, jeans) {   // simple standing person seen from behind
+  const p = new THREE.Group(); p.position.set(x, 0, z); p.rotation.y = Math.PI * 0.85;
+  const sk = new THREE.MeshStandardMaterial({ color: 0xb9835d, roughness: 0.6 });
+  const mk = (geo, m, px, py, pz) => { const o = new THREE.Mesh(geo, m); o.position.set(px, py, pz); o.castShadow = true; p.add(o); return o; };
+  for (const sx of [-1, 1]) mk(new THREE.CapsuleGeometry(0.07, 0.78, 6, 12), smat(jeans), sx * 0.09, 0.47, 0);
+  mk(new THREE.CapsuleGeometry(0.17, 0.4, 8, 16), smat(hoodie), 0, 1.2, 0).scale.set(1.15, 1, 0.75);
+  for (const sx of [-1, 1]) mk(new THREE.CapsuleGeometry(0.05, 0.5, 6, 12), smat(hoodie), sx * 0.24, 1.15, 0);
+  mk(new THREE.SphereGeometry(0.115, 20, 14), sk, 0, 1.68, 0).scale.set(0.95, 1.05, 1);
+  mk(new THREE.SphereGeometry(0.12, 20, 14, 0, Math.PI * 2, 0, 1.8), smat(0x16110f, 0.5), 0, 1.69, -0.01);
+  parent.add(p);
+}
 function streetBlock(z0) {
   const g = new THREE.Group(); g.position.z = z0;
   const box = (w, h, d, x, y, z, m) => {
     const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); b.position.set(x, y, z);
     b.castShadow = b.receiveShadow = true; g.add(b); return b;
   };
-  const pave = smat(dark ? 0x454b57 : 0xbfc2c9);
+  const pave = smat(dark ? 0x5a5559 : 0xcdbdb2, 0.95);
   box(5.4, 0.02, BLOCK, -1.3, 0.01, 0, pave);
-  for (let i = 0; i < BLOCK * 2; i++) box(5.4, 0.003, 0.01, -1.3, 0.021, -BLOCK / 2 + i * 0.5, smat(dark ? 0x3a404b : 0xaaadb5));
+  const groove = smat(dark ? 0x3f3b40 : 0xa99b92);
+  for (let i = 0; i < BLOCK * 2; i++) box(5.4, 0.003, 0.012, -1.3, 0.021, -BLOCK / 2 + i * 0.5, groove);
+  for (let i = 0; i < 11; i++) for (let k = 0; k < BLOCK * 2; k += 2)
+    box(0.012, 0.003, 0.5, -3.9 + i * 0.5 + ((k / 2) % 2) * 0.25, 0.021, -BLOCK / 2 + k * 0.5 + 0.25, groove);
   box(5, 0.01, BLOCK, 4.8, 0.005, 0, smat(dark ? 0x2c3038 : 0x7b7f87));              // road
   box(0.12, 0.012, 3, 2.35, 0.012, 0, smat(0xf0eee6, 0.7));                           // lane line
   box(0.12, 0.12, BLOCK, 2.1, 0.06, 0, smat(dark ? 0x555b66 : 0xa3a6ae));            // kerb
-  const cols = [0xcab8a0, 0xb9a48c, 0xd2c2ad, 0xaeb7c4];
+  const cols = [0xd3c3ad, 0xc9a99b, 0xd8cdbd, 0xbfa294];
   box(1.6, 5, 2.9, -4.2, 2.5, -1.5, smat(cols[(z0 / BLOCK + 8) % 4 | 0]));
   box(1.6, 6.5, 2.9, -4.2, 3.25, 1.5, smat(cols[(z0 / BLOCK + 9) % 4 | 0]));
   for (let j = 0; j < 4; j++) for (const zz of [-2.2, -0.8, 0.8, 2.2])
     box(0.05, 0.7, 0.5, -3.38, 1.2 + j * 1.2, zz, smat(0x39434f, 0.3));
   box(0.07, 3.2, 0.07, 2.6, 1.6, 2.2, smat(0x4a4f58, 0.5));                           // lamp
   box(0.7, 0.06, 0.06, 2.3, 3.2, 2.2, smat(0x4a4f58, 0.5));
+  const bn = banner(['AVATAR', 'STREET'], '#2f5fb3', '#ffffff'); bn.position.set(2.2, 2.7, -1.2); g.add(bn);
+  const bn2 = banner(['GLOBAL', 'CAFE'], '#1f8a8a', '#ffffff'); bn2.position.set(2.2, 2.5, 1.8); g.add(bn2);
+  if (z0 % (BLOCK * 2) === 0) bystander(g, -1.9, -1.5, 0x6b4636, 0x3b5f92); else bystander(g, -2.2, 1.0, 0x8a5a44, 0x3b5f92);
   return g;
 }
 const blocks = [-1, 0, 1].map(i => { const b = streetBlock(i * BLOCK); street.add(b); return b; });
@@ -76,16 +110,16 @@ floor.position.y = -0.01; floor.receiveShadow = true; scene.add(floor);
 // ---- avatar helpers ----------------------------------------------------------------------
 const mat = (c, r = 0.65, o = {}) => new THREE.MeshPhysicalMaterial({ color: c, roughness: r, ...o });
 const M = {
-  skin: mat(0xb07650, 0.55, { sheen: 0.3, sheenRoughness: 0.5, sheenColor: new THREE.Color(0xd79a74) }),
+  skin: mat(0xc08359, 0.5, { sheen: 0.35, sheenRoughness: 0.45, sheenColor: new THREE.Color(0xe3a77d) }),
   jacket: mat(0x1c1c20, 0.5, { sheen: 0.8, sheenRoughness: 0.4, sheenColor: new THREE.Color(0x555a66), side: THREE.DoubleSide }),
   rib: mat(0x151518, 0.9, { side: THREE.DoubleSide }),
-  polo: mat(0xe2cfa9, 0.8, { sheen: 0.5, side: THREE.DoubleSide }),
-  jeans: mat(0x27406b, 0.85, { sheen: 0.4, sheenColor: new THREE.Color(0x4a6aa0), side: THREE.DoubleSide }),
+  polo: mat(0xcdb899, 0.8, { sheen: 0.5, side: THREE.DoubleSide }),
+  jeans: mat(0x25375a, 0.85, { sheen: 0.4, sheenColor: new THREE.Color(0x4a6590), side: THREE.DoubleSide }),
   cuff: mat(0x4a6a9c, 0.9, { side: THREE.DoubleSide }),
-  shoe: mat(0x2552b8, 0.55), sole: mat(0xf0efe9, 0.6), lace: mat(0xe8e8e8, 0.7),
+  shoe: mat(0x2b3f7c, 0.55), sole: mat(0xf0efe9, 0.6), lace: mat(0xe8e8e8, 0.7),
   hair: mat(0x14100e, 0.45, { sheen: 0.5, sheenColor: new THREE.Color(0x5a5f6a) }),
-  stubble: new THREE.MeshStandardMaterial({ color: 0x1a1210, roughness: 1, transparent: true, opacity: 0.2, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 }),
-  white: mat(0xf2efe8, 0.25), iris: mat(0x3a2314, 0.25), pupil: mat(0x050404, 0.2),
+  stubble: new THREE.MeshStandardMaterial({ color: 0x1a1210, roughness: 1, transparent: true, opacity: 0.1, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 }),
+  white: mat(0xf2efe8, 0.25), iris: mat(0x4a2a14, 0.25), pupil: mat(0x050404, 0.2),
   mouth: mat(0x4a1a1a, 0.6), lip: mat(0x8a4a3e, 0.5),
   frame: mat(0x17181b, 0.35, { metalness: 0.3 }),
   lens: new THREE.MeshPhysicalMaterial({ color: 0xdfeaf5, roughness: 0.05, transparent: true, opacity: 0.12, depthWrite: false }),
@@ -163,6 +197,7 @@ put(chest, new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.38, 0.12), M.pack), 0, 0
 const neck = joint('neck', chest, 0, 0.3, 0);
 put(neck, new THREE.Mesh(new THREE.CylinderGeometry(0.046, 0.052, 0.12, 20), M.skin), 0, 0.03, 0);
 const head = joint('head', neck, 0, 0.08, 0);
+head.scale.setScalar(1.22);
 // skull, face, jaw, chin
 ball(head, 0.105, M.skin, 0, 0.125, -0.006, 0.93, 1.04, 1.0);
 ball(head, 0.09, M.skin, 0, 0.078, 0.012, 0.96, 1.0, 0.98);
@@ -177,9 +212,10 @@ ball(head, 0.008, M.skin, 0.011, 0.085, 0.098, 1, 0.8, 1);
 // eyes and brows
 for (const [side, sx] of [['L', 1], ['R', -1]]) {
   const lid = joint('lid.' + side, head, sx * 0.037, 0.128, 0.088);
-  ball(lid, 0.0155, M.white, 0, 0, 0, 1, 0.9, 0.6);
-  ball(lid, 0.0085, M.iris, 0, 0, 0.007, 1, 1, 0.5);
-  ball(lid, 0.004, M.pupil, 0, 0, 0.0105, 1, 1, 0.5);
+  ball(lid, 0.0185, M.white, 0, 0, 0, 1, 1, 0.6);
+  ball(lid, 0.0125, M.iris, 0, 0, 0.007, 1, 1, 0.5);
+  ball(lid, 0.006, M.pupil, 0, 0, 0.011, 1, 1, 0.5);
+  ball(lid, 0.003, M.white, sx * 0.004, 0.004, 0.0135, 1, 1, 0.5);
   const brow = new THREE.Mesh(new THREE.CapsuleGeometry(0.0055, 0.034, 4, 8).rotateZ(Math.PI / 2), M.hair);
   put(head, brow, sx * 0.04, 0.155, 0.092).rotation.z = sx * -0.1;
 }
@@ -192,15 +228,15 @@ function frameGeo(w, h, r, t) {
 }
 const glasses = new THREE.Group(); head.add(glasses);
 for (const sx of [1, -1]) {
-  put(glasses, new THREE.Mesh(frameGeo(0.058, 0.04, 0.009, 0.0045), M.frame), sx * 0.037, 0.128, 0.098);
+  put(glasses, new THREE.Mesh(frameGeo(0.058, 0.042, 0.012, 0.0035), M.frame), sx * 0.037, 0.128, 0.098);
   put(glasses, new THREE.Mesh(new THREE.PlaneGeometry(0.054, 0.036), M.lens), sx * 0.037, 0.128, 0.102).castShadow = false;
   put(glasses, new THREE.Mesh(new THREE.BoxGeometry(0.003, 0.004, 0.12), M.frame), sx * 0.069, 0.132, 0.04);
 }
 put(glasses, new THREE.Mesh(new THREE.BoxGeometry(0.016, 0.004, 0.005), M.frame), 0, 0.136, 0.1);
 // mouth, moustache, goatee, stubble
 const jaw = joint('jaw', head, 0, 0.058, 0.098);
-const mouthOpen = ball(jaw, 0.024, M.mouth, 0, 0, -0.004, 1, 0.1, 0.4);
-const smile = new THREE.Mesh(new THREE.TorusGeometry(0.026, 0.0038, 6, 20, Math.PI * 0.75), M.lip);
+const mouthOpen = ball(jaw, 0.03, M.mouth, 0, 0, -0.004, 1, 0.1, 0.4);
+const smile = new THREE.Mesh(new THREE.TorusGeometry(0.03, 0.0042, 6, 20, Math.PI * 0.8), M.lip);
 smile.rotation.z = Math.PI * 1.125; smile.position.set(0, 0.014, -0.003); jaw.add(smile);
 for (const sx of [1, -1]) {
   const m = new THREE.Mesh(new THREE.CapsuleGeometry(0.0068, 0.024, 4, 8).rotateZ(Math.PI / 2), M.hair);
@@ -215,9 +251,11 @@ hairBack.scale.set(0.95, 1.06, 1.03); put(head, hairBack, 0, 0.125, -0.003);
 const hairTop = new THREE.Group(); head.add(hairTop);
 const topShell = new THREE.Mesh(new THREE.SphereGeometry(0.113, 32, 16, 0, Math.PI, 0, 1.2), M.hair);
 topShell.scale.set(0.95, 1.06, 1.03); put(hairTop, topShell, 0, 0.125, -0.003);
-ball(hairTop, 0.062, M.hair, 0, 0.205, 0.02, 1.3, 0.55, 1.6).rotation.x = -0.2;
-ball(hairTop, 0.045, M.hair, 0, 0.2, 0.07, 1.4, 0.6, 1.0).rotation.x = -0.35;
-ball(hairTop, 0.04, M.hair, 0.045, 0.215, 0.0, 1.0, 0.6, 1.5);
+ball(hairTop, 0.07, M.hair, 0, 0.2, 0.0, 1.3, 0.6, 1.5);
+for (const [x, y, z, sx, sy, sz, rx, rz] of [
+  [0, 0.235, 0.045, 1.5, 0.75, 1.5, -0.45, 0], [-0.04, 0.24, 0.0, 1.0, 0.8, 1.5, -0.2, 0.35],
+  [0.04, 0.245, 0.01, 1.0, 0.85, 1.5, -0.25, -0.3], [0, 0.225, 0.085, 1.3, 0.55, 0.9, -0.7, 0], [0, 0.245, -0.03, 1.3, 0.8, 1.2, 0.1, 0],
+]) { const m = ball(hairTop, 0.05, M.hair, x, y, z, sx, sy, sz); m.rotation.set(rx, 0, rz); }
 for (const sx of [1, -1]) put(head, new THREE.Mesh(new THREE.BoxGeometry(0.008, 0.032, 0.018), M.hair), sx * 0.085, 0.125, 0.04);
 const capGroup = new THREE.Group(); head.add(capGroup);
 {
